@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   							 http://www.springframework.org/schema/beans/spring-beans.xsd
+   							   http://www.springframework.org/schema/context
+   							   http://www.springframework.org/schema/context/spring-context-4.3.xsd
+   							   http://www.springframework.org/schema/tx
+   							   http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+   							   http://www.springframework.org/schema/aop
+   							   http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"
+       default-autowire="byType">
+    <!-- 配置数据源 换成你的数据库url-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://hadoop01:3306/jdbc?user=root&amp;password=root"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+        <property name="maxPoolSize" value="20"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="initialPoolSize" value="3"/>
+        <property name="acquireIncrement" value="2"/>
+    </bean>
+
+    <!-- 配置SessionFactory -->
+    <bean id="SessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybaties-config.xml"/>
+    </bean>
+    <!-- 包扫描 -->
+    <context:component-scan base-package="com.ssm.dao,com.ssm.service,com.ssm.dao"/>
+
+    <!-- 事务管理器 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置事务 -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置事务切面 -->
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"/>
+    </aop:config>
+</beans>

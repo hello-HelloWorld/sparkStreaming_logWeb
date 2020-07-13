@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 创建别名关系 -->
+    <typeAliases>
+        <typeAlias type="com.ssm.domain.Course" alias="_Course"/>
+        <typeAlias type="com.ssm.domain.SearchEngine" alias="_SearchEngine"/>
+    </typeAliases>
+
+    <!--   创建映射关系   -->
+    <mappers>
+        <mapper resource="CourseMapper.xml"/>
+        <mapper resource="SearchEngineMapper.xml"/>
+    </mappers>
+</configuration>

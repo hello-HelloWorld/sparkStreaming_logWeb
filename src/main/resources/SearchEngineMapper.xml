@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义名字空间 -->
+<mapper namespace="searchEngine">
+    <select id="findEngineName" parameterType="String" resultType="_SearchEngine">
+        select `name`
+        from search_engine
+        where id = #{name}
+    </select>
+</mapper>
