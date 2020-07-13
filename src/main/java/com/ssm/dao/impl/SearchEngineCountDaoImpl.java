@@ -10,6 +10,7 @@ import com.ssm.domain.SearchEngine;
 import com.ssm.utils.HBaseUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 //搜索引擎统计Dao实现类
+@Repository("SearchEngineCountDao")
 public class SearchEngineCountDaoImpl extends SqlSessionDaoSupport implements SearchEngineCountDao {
     @Override
     public List<SearchEngine> findSearchEngineCount(String tableName, String date) {
