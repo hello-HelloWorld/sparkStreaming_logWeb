@@ -9,6 +9,7 @@ import com.ssm.dao.CourseClickCountDao;
 import com.ssm.domain.Course;
 import com.ssm.utils.HBaseUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 //课程点击统计Dao实现类
+@Repository("CourseClickCountDao")
 public class CourseClickCountDaoImpl extends SqlSessionDaoSupport implements CourseClickCountDao {
     @Override
     public Set<Course> findCourseCount(String tableName, String date) {
