@@ -22,7 +22,7 @@ public class CourseClickController {
     //页面跳转
     @RequestMapping("/courseclick")
     public String toGetCourseClick() {
-        return "courseClick";
+        return "courseclick";
     }
 
     /**

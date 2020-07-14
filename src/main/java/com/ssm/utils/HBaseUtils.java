@@ -5,8 +5,9 @@ package com.ssm.utils;
  * @date  : Created in 2020/7/13 15:33
  */
 
-import jdk.nashorn.internal.ir.ReturnNode;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
@@ -61,13 +62,21 @@ public class HBaseUtils {
             String cf = "info";
             //列
             String qualifer = "click_count";
-            //定义扫描器前缀过滤器，只扫描给定日期的row
+            //定义扫描器前缀过滤器，只扫rowKey前缀带有date的row
             PrefixFilter prefixFilter = new PrefixFilter(Bytes.toBytes(date));
             //定义扫描器
             Scan scan = new Scan();
             scan.setFilter(prefixFilter);
             ResultScanner results = htable.getScanner(scan);
             for (Result result : results) {
+                Cell[] cells = result.rawCells();
+                /*for (Cell cell:cells){
+                    //rowKey
+                    String rowKey = Bytes.toString(CellUtil.cloneRow(cell));
+                    //点击次数
+                    long clickCount = Bytes.toLong(CellUtil.cloneValue(cell));
+                    map.put(rowKey, clickCount);
+                }*/
                 //取出rowKey
                 String rowKey = Bytes.toString(result.getRow());
                 //取出点击次数
